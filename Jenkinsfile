@@ -1,6 +1,8 @@
 pipeline {
     agent any
+
     stages {
+
         stage('Build Backend Image') {
             steps {
                 sh '''
@@ -33,11 +35,13 @@ pipeline {
                   nginx
 
                 docker cp nginx/default.conf nginx-lb:/etc/nginx/conf.d/default.conf
-                docker exec nginx-lb nginx -s reload
+
+                docker restart nginx-lb
                 '''
             }
         }
-    }
+
+    }   // <-- THIS closes stages block
 
     post {
         success {
